@@ -53,6 +53,7 @@ document.jamberry_config = {
 in `jam/data/config/config.js`
 
 * Change the cookie domain name you want to use
+* Change the cookie https/http setting
 * Change cookie & jwt secrets 
 
 ```

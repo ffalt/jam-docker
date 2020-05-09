@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  elastic:
+  elasticsearch:
     restart: always
     container_name: elasticsearch-jam
     image: docker.elastic.co/elasticsearch/elasticsearch:6.8.8
@@ -11,7 +11,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
       - type: bind
-        source: ./data/db/elastic
+        source: ./data/db
         target: /usr/share/elasticsearch/data/
     ports:
       - "127.0.0.1:9200:9200"
@@ -36,11 +36,11 @@ services:
     user: app
     command: sh /home/app/start.sh
     environment:
-      DATABASE_CHECK: http://elasticsearch:9200/_cluster/health
+       DATABASE_CHECK: http://elasticsearch:9200/_cluster/health
     depends_on:
-      - elastic
+      - elasticsearch
     links:
-      - elastic:elastic
+      - elasticsearch:elasticsearch
     ports:
       - "0.0.0.0:4040:4040"
 

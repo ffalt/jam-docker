@@ -24,7 +24,7 @@ module.exports = {
 		session: {
 			/*
 				Due to CORS security you MUST name all domains where login with session cookie is allowed
-				https://de.wikipedia.org/wiki/Cross-Origin_Resource_Sharing
+				https://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing
 				(background: random sites cannot access/create cookies for your domain)
 			*/
 			allowedCookieDomains: ['http://localhost:4040', 'http://0.0.0.0:4040'],
