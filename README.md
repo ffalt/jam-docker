@@ -71,7 +71,7 @@ Jam in Docker expects all path entries to your media in `<location on your syste
 
 e.g. `/Users/ffalt/projects/jam/docker/run/data/media/Awesome Collection`
 
-entered as `{name: 'Awesome Collection', path: '/usr/share/media/music/Awesome Collection', strategy: 'auto'},`
+entered as `/usr/share/media/music/Awesome Collection`
 
 These settings are copied to the database on the first run, you can change them with in the Admin Section of the front-end.
 
