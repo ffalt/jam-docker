@@ -24,11 +24,10 @@ Folder & files structure:
 jam
 ├── data
   ├── config                  # where Jam read its configuration
-  │ ├── config.js              # Jamserve settings
+  │ ├── .env                   # Jamserve settings
   │ ├── firststart.config.js   # Default admin user and media source settings
   │ └── jamberry.config.js     # Jamberry front-end settings
   ├── data                    # where Jam stores its data
-  ├── db                      # where Elasticsearch stores its data
   ├── logs                    # where Jam stores its log files
   └── media                   # where you can store or link your media sources
 ```
@@ -37,63 +36,44 @@ Most of the configuration is already done to match the docker configuration.
 
 Following important settings have to be changed by you:
 
-in `jam/data/config/jamberry.config.js`
+### `jam/data/config/.env`
 
-Change the domain name you want to use
+Basic Environment Settings
 
-```
-document.jamberry_config = {
-    ...
-    "fixed": {
-        "server": "http://localhost:4040"
-    },
-};
-```
-
-in `jam/data/config/config.js`
-
-* Change the cookie domain name you want to use
-* Change the cookie https/http setting
-* Change cookie & jwt secrets 
-
-```
-module.exports = {
-   server: {
-      ...
-      session: {
-         ...
-         /*
-            Due to CORS security you MUST name all domains where login with session cookie is allowed
-            https://de.wikipedia.org/wiki/Cross-Origin_Resource_Sharing
-            (background: random sites cannot access/create cookies for your domain)
-         */
-         allowedCookieDomains: ['http://localhost:4040', 'http://0.0.0.0:4040'],
-         /*
-            An unique string for your instance to sign the session cookie (change it!)
-            http://www.senchalabs.org/connect/session.html
-         */
-         secret: 'keyboard cat is dancing',
-         cookie: {
-            /*
-               If true, session cookies are only available for https, NOT http
-            */
-            secure: false,
-            ...
-         }
-      }
-      jwt: {
-         /*
-            An unique string for your instance to sign the token (change it!)
-         */
-         secret: 'keyboard cat is stomping',
-         ...
-      }
-   }
-}
+These settings are used on startup, changes require a Docker restart.
 
 ```
 
-in `jam/data/config/firststart.config.js`
+# Due to CORS security you MUST name all domains where login with session cookie is allowed
+# https://de.wikipedia.org/wiki/Cross-Origin_Resource_Sharing
+#  (background: random sites cannot access/create cookies for your domain)
+JAM_ALLOWED_COOKIE_DOMAINS=http://localhost:4040,http://0.0.0.0:4040
+
+# An unique string for your instance to sign the session cookie (change it!)
+# http://www.senchalabs.org/connect/session.html
+JAM_JWT_SECRET=keyboard cat is stomping
+JAM_SESSION_SECRET=keyboard cat is dancing
+
+# If true, session cookies are only available for https, NOT http
+JAM_SESSION_COOKIE_SECURE=false
+
+# Set true if you want to use a reverse proxy like nginx
+JAM_SESSION_TRUST_PROXY=false
+
+```
+
+
+### `jam/data/config/firststart.config.js`
+
+Media and User Settings only applied once on first start
+
+Jam in Docker expects all path entries to your media in `<location on your system>/jam/data/media/` to be replaced with `/usr/share/media/`
+
+e.g. `/Users/ffalt/projects/jam/docker/run/data/media/Awesome Collection`
+
+entered as `{name: 'Awesome Collection', path: '/usr/share/media/music/Awesome Collection', strategy: 'auto'},`
+
+These settings are copied to the database on the first run, you can change them with in the Admin Section of the front-end.
 
 ```
 module.exports = {
@@ -126,13 +106,20 @@ module.exports = {
 
 ```
 
-Jam is wired in Docker to expect all path entries to your media in `<location on your system>/jam/data/media/` to be replaced with `/usr/share/media/`
+### `jam/data/config/jamberry.config.js`
 
-e.g. `/Users/ffalt/projects/jam/docker/run/data/media/Awesome Collection`
+Change the domain name / port you want to use.
 
-entered as `{name: 'Awesome Collection', path: '/usr/share/media/music/Awesome Collection', strategy: 'auto'},`
+These settings will be used by the front-end app.
 
-These settings are copied to the database on the first run, you can change them with in the Admin Section of the front-end.
+```
+document.jamberry_config = {
+    ...
+    "fixed": {
+        "server": "http://localhost:4040"
+    },
+};
+```
 
 ### Build
 `docker-compose build`
