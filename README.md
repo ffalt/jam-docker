@@ -13,21 +13,27 @@ navigate to the downloaded/extracted folder
 
 `cd jam`
 
-copy to the default folder to data (DO NOT SKIP THIS STEP)
+copy default config files (DO NOT SKIP THIS STEP)
 
-`cp -r default-config data/config`
+`cp jam.env.dist jam.env`
+`cp progress.env.dist progress.env`
+`cp storage/data/config/firststart.config.js.dist storage/data/config/firststart.config.js`
+`cp storage/data/config/jamberry.config.js.dist storage/data/config/jamberry.config.js`
 
 ### Configuration
 
 Folder & files structure:
 ```
 jam
-├── data
-  ├── config                  # where Jam read its configuration
-  │ ├── .env                   # Jamserve settings
-  │ ├── firststart.config.js   # Default admin user and media source settings
-  │ └── jamberry.config.js     # Jamberry front-end settings
+├── jam.env                   # Jamserve settings
+├── postgres.env              # postgres settings
+├── storage                   # runtime data folder
   ├── data                    # where Jam stores its data
+  │ └── config                    # where Jam read its configuration
+  │ │  ├── firststart.config.js   # Default admin user and media source settings
+  │ │  └── jamberry.config.js     # Jamberry front-end settings
+  │ └ ...                         # Other Cache directories 
+  ├── db                      # where the Database stores its files
   ├── logs                    # where Jam stores its log files
   └── media                   # where you can store or link your media sources
 ```
@@ -36,7 +42,7 @@ Most of the configuration is already done to match the docker configuration.
 
 Following important settings have to be changed by you:
 
-### `jam/data/config/.env`
+### `jam.env`
 
 Basic Environment Settings
 
@@ -47,7 +53,7 @@ These settings are used on startup, changes require a Docker restart.
 # Due to CORS security you MUST name all domains where login with session cookie is allowed
 # https://de.wikipedia.org/wiki/Cross-Origin_Resource_Sharing
 #  (background: random sites cannot access/create cookies for your domain)
-JAM_ALLOWED_COOKIE_DOMAINS=http://localhost:4040,http://0.0.0.0:4040
+JAM_ALLOWED_COOKIE_DOMAINS=http://localhost:4040
 
 # An unique string for your instance to sign the session cookie (change it!)
 # http://www.senchalabs.org/connect/session.html
@@ -60,10 +66,27 @@ JAM_SESSION_COOKIE_SECURE=false
 # Set true if you want to use a reverse proxy like nginx
 JAM_SESSION_TRUST_PROXY=false
 
+JAM_DB_NAME=jam
+JAM_DB_USER=jam
+JAM_DB_PASSWORD=jam
+
+```
+
+### `postgres.env`
+
+Basic Database Settings
+
+These settings are used on startup, changes require a Docker restart.
+
+```
+POSTGRES_DB=jam         # Database name, must match JAM_DB_NAME
+POSTGRES_USER=jam       # Database user, must match JAM_DB_USER
+POSTGRES_PASSWORD=jam   # Databaase password, must match JAM_DB_PASSWORD
+
 ```
 
 
-### `jam/data/config/firststart.config.js`
+### `storage/data/config/firststart.config.js`
 
 Media and User Settings only applied once on first start
 
@@ -106,7 +129,7 @@ module.exports = {
 
 ```
 
-### `jam/data/config/jamberry.config.js`
+### `storage/data/config/jamberry.config.js`
 
 Change the domain name / port you want to use.
 
