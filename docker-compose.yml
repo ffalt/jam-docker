@@ -1,24 +1,45 @@
 version: '3.7'
 services:
+  jam-postgres:
+    image: postgres:12.4
+    volumes:
+      - type: bind
+        source: ./storage/db/postgres
+        target: /var/lib/postgresql/data
+    env_file:
+      - postgres.env
+#    ports:
+#      - "127.0.0.1:5432:5432"
   jam:
     restart: always
     image: ffalt/jam:latest
     container_name: jam
+    depends_on:
+      - jam-postgres
     volumes:
       - type: bind
-        source: ./data/config
-        target: /home/app/jam/config
+        source: ./storage/data
+        target: /home/node/jam/data
       - type: bind
-        source: ./data/data
-        target: /home/app/jam/data
+        source: ./storage/logs
+        target: /home/node/jam/logs
       - type: bind
-        source: ./data/logs
-        target: /home/app/jam/logs
-      - type: bind
-        source: ./data/media
+        source: ./storage/media
         target: /usr/share/media
-    user: app
-    command: sh /home/app/start.sh
+    user: node
     ports:
       - "0.0.0.0:4040:4040"
+    env_file:
+      - jam.env
+    command: bash -c 'while !</dev/tcp/jam-postgres/5432; do sleep 1; done; sh /home/node/start.sh'
+    environment:
+      JAM_HOST: 0.0.0.0
+      JAM_PORT: 4040
+      JAM_DATA_PATH: /home/node/jam/data/
+      JAM_FRONTEND_PATH: /home/node/jam/berry/
+      JAM_DB_DIALECT: postgres
+      JAM_DB_HOST: jam-postgres
+      JAM_DB_PORT: 5432
+      JAM_DB_SOCKET: /var/run/postgresql/.s.PGSQL.5432
+#      DATABASE_CHECK: http://elasticsearch:9200/_cluster/health
 
