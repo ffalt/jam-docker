@@ -35,8 +35,7 @@ jam
 └── storage                   # runtime data folder
     ├── data                    # where Jam stores its data
     │   ├── config                    # where Jam read its configuration
-    │   │   ├── firststart.config.js   # Default admin user and media source settings
-    │   │   └── jamberry.config.js     # Jamberry front-end settings
+    │   │   └── firststart.config.js   # Default admin user and media source settings
     │   └ ...                         # Other Cache directories 
     ├── db                      # where the Database stores its files
     ├── logs                    # where Jam stores its log files
