@@ -22,6 +22,12 @@ cp storage/data/config/firststart.config.js.dist storage/data/config/firststart.
 cp storage/data/config/jamberry.config.js.dist storage/data/config/jamberry.config.js
 ```
 
+create a folder for the database files
+
+```
+mkdir storage/db/postgres
+```
+
 ### Configuration
 
 Folder & files structure:
