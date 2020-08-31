@@ -15,10 +15,12 @@ navigate to the downloaded/extracted folder
 
 copy default config files (DO NOT SKIP THIS STEP)
 
-`cp jam.env.dist jam.env`
-`cp progress.env.dist progress.env`
-`cp storage/data/config/firststart.config.js.dist storage/data/config/firststart.config.js`
-`cp storage/data/config/jamberry.config.js.dist storage/data/config/jamberry.config.js`
+```
+cp jam.env.dist jam.env
+cp progress.env.dist progress.env
+cp storage/data/config/firststart.config.js.dist storage/data/config/firststart.config.js
+cp storage/data/config/jamberry.config.js.dist storage/data/config/jamberry.config.js
+```
 
 ### Configuration
 
