@@ -16,8 +16,7 @@ navigate to the downloaded/extracted folder
 copy default config files (DO NOT SKIP THIS STEP)
 
 ```
-cp jam.env.dist jam.env
-cp postgres.env.dist postgres.env
+cp .env.dist .env
 cp storage/data/config/firststart.config.js.dist storage/data/config/firststart.config.js
 cp storage/data/config/jamberry.config.js.dist storage/data/config/jamberry.config.js
 ```
@@ -33,30 +32,37 @@ mkdir storage/db/postgres
 Folder & files structure:
 ```
 jam
-├── jam.env                   # Jamserve settings
-├── postgres.env              # postgres settings
-├── storage                   # runtime data folder
-  ├── data                    # where Jam stores its data
-  │ └── config                    # where Jam read its configuration
-  │ │  ├── firststart.config.js   # Default admin user and media source settings
-  │ │  └── jamberry.config.js     # Jamberry front-end settings
-  │ └ ...                         # Other Cache directories 
-  ├── db                      # where the Database stores its files
-  ├── logs                    # where Jam stores its log files
-  └── media                   # where you can store or link your media sources
+├── .env                      # Jamserve settings
+└── storage                   # runtime data folder
+    ├── data                    # where Jam stores its data
+    │   ├── config                    # where Jam read its configuration
+    │   │   ├── firststart.config.js   # Default admin user and media source settings
+    │   │   └── jamberry.config.js     # Jamberry front-end settings
+    │   └ ...                         # Other Cache directories 
+    ├── db                      # where the Database stores its files
+    ├── logs                    # where Jam stores its log files
+    └── media                   # where you can store or link your media sources
 ```
 
 Most of the configuration is already done to match the docker configuration. 
 
 Following important settings have to be changed by you:
 
-### `jam.env`
+### `.env`
 
 Basic Environment Settings
 
 These settings are used on startup, changes require a Docker restart.
 
 ```
+# Server listen address
+JAM_HOST=0.0.0.0
+
+# Server listen port
+JAM_PORT=4040
+
+# Log Level, possible values: 'error' | 'warn' | 'info' | 'debug'
+JAM_LOG_LEVEL=info
 
 # Due to CORS security you MUST name all domains where login with session cookie is allowed
 # https://de.wikipedia.org/wiki/Cross-Origin_Resource_Sharing
@@ -74,22 +80,14 @@ JAM_SESSION_COOKIE_SECURE=false
 # Set true if you want to use a reverse proxy like nginx
 JAM_SESSION_TRUST_PROXY=false
 
+# Database name
 JAM_DB_NAME=jam
+
+# Database user name
 JAM_DB_USER=jam
+
+# Database user password
 JAM_DB_PASSWORD=jam
-
-```
-
-### `postgres.env`
-
-Basic Database Settings
-
-These settings are used on startup, changes require a Docker restart.
-
-```
-POSTGRES_DB=jam         # Database name, must match JAM_DB_NAME
-POSTGRES_USER=jam       # Database user, must match JAM_DB_USER
-POSTGRES_PASSWORD=jam   # Databaase password, must match JAM_DB_PASSWORD
 
 ```
 
