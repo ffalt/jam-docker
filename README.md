@@ -18,7 +18,6 @@ copy default config files (DO NOT SKIP THIS STEP)
 ```
 cp .env.dist .env
 cp storage/data/config/firststart.config.js.dist storage/data/config/firststart.config.js
-cp storage/data/config/jamberry.config.js.dist storage/data/config/jamberry.config.js
 ```
 
 create a folder for the database files
@@ -55,6 +54,9 @@ Basic Environment Settings
 These settings are used on startup, changes require a Docker restart.
 
 ```
+# Server Domain URL (e.g. https://music.yourdomain.somewhere)
+JAM_DOMAIN=http://localhost:4040
+
 # Server listen address
 JAM_HOST=0.0.0.0
 
@@ -133,21 +135,6 @@ module.exports = {
    ]
 };
 
-```
-
-### `storage/data/config/jamberry.config.js`
-
-Change the domain name / port you want to use.
-
-These settings will be used by the front-end app.
-
-```
-document.jamberry_config = {
-    ...
-    "fixed": {
-        "server": "http://localhost:4040"
-    },
-};
 ```
 
 ### Build
