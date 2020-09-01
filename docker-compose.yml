@@ -36,6 +36,7 @@ services:
     environment:
       JAM_HOST: "0.0.0.0"
       JAM_PORT: "4040"
+      JAM_DOMAIN: "${JAM_DOMAIN}"
       JAM_LOG_LEVEL: "${JAM_LOG_LEVEL}"
       JAM_JWT_SECRET: "${JAM_JWT_SECRET}"
       JAM_JWT_MAXAGE: "${JAM_JWT_MAXAGE}"
