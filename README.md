@@ -147,3 +147,6 @@ module.exports = {
 
 ### Stop
 `docker-compose stop`
+
+### Update
+`docker-compose pull`
