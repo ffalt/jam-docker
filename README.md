@@ -1,5 +1,5 @@
 # jam-docker
-a default configuration running jam with elasticsearch with docker
+a default configuration running jam & postgres with docker
 
 ## Howto
 
@@ -103,7 +103,7 @@ e.g. `/Users/ffalt/projects/jam/docker/run/data/media/Awesome Collection`
 
 entered as `/usr/share/media/music/Awesome Collection`
 
-These settings are copied to the database on the first run, you can change them with in the Admin Section of the front-end.
+These settings are copied to the database on the first run, you can change them within the Admin Section of the front-end.
 
 ```
 module.exports = {
