@@ -5,7 +5,7 @@ a default configuration running jam & postgres with docker
 
 ### Download
 
-download this repo with git (or use githubs download button and unzip the downloaded file)
+download this repo with git (or use the github download button and unzip the downloaded file)
 
 `git clone https://github.com/ffalt/jam-docker.git jam`
 
@@ -17,7 +17,7 @@ copy default config files (DO NOT SKIP THIS STEP)
 
 ```
 cp .env.dist .env
-cp storage/data/config/firststart.config.js.dist storage/data/config/firststart.config.js
+cp storage/data/config/firststart.config.json.dist storage/data/config/firststart.config.json
 ```
 
 create a folder for the database files
@@ -34,9 +34,9 @@ jam
 ├── .env                      # Jamserve settings
 └── storage                   # runtime data folder
     ├── data                    # where Jam stores its data
-    │   ├── config                    # where Jam read its configuration
-    │   │   └── firststart.config.js   # Default admin user and media source settings
-    │   └ ...                         # Other Cache directories 
+    │   ├── config                     # where Jam read its configuration
+    │   │   └── firststart.config.json # Default admin user and media source settings
+    │   └ ...                          # Other Cache directories 
     ├── db                      # where the Database stores its files
     ├── logs                    # where Jam stores its log files
     └── media                   # where you can store or link your media sources
@@ -93,7 +93,7 @@ JAM_DB_PASSWORD=jam
 ```
 
 
-### `storage/data/config/firststart.config.js`
+### `storage/data/config/firststart.config.json`
 
 Media and User Settings only applied once on first start
 
@@ -105,35 +105,37 @@ entered as `/usr/share/media/music/Awesome Collection`
 
 These settings are copied to the database on the first run, you can change them within the Admin Section of the front-end.
 
-```
-module.exports = {
-   /*
-      Default Admin user
+```json lines
+/*
+  Add Admin user and media folders on first start
+ */
+{
+  /*
+    Default Admin user
+  */
+  "adminUser": {
+    "name": "admin",
+    /*
+      Since the default admin password is stored in clear in this file,
+      you MUST change it on first login
+    */
+    "pass": "your admin password"
+  },
+  /*
+    Default Media folders
+    Scan strategies:
+    'auto' -- try to figure it out
+    'artistalbum' -- artist/album folder structure
+    'compilation' -- bunch of compilation folders
+    'audiobook' -- bunch of audiobook folders
    */
-   adminUser: {
-      name: 'admin',
-      /* 
-         Since the default admin password is stored in clear in this file,
-         you MUST change it on first login, in the db only salted hashes of password are stored
-      */
-      pass: 'admin'   
-   },
-   /*
-      Default Media folders
-      Scan strategies:
-         'auto' -- try to figure it out
-         'artistalbum' -- artist/album folder structure
-         'compilation' -- bunch of compilation folders
-         'audiobook' -- bunch of audiobook folders
-   */
-   roots: [
-      {name: 'Music', path: '/usr/share/media/music', strategy: 'auto'},
-      {name: 'Compilations', path: '/usr/share/media/compilations', strategy: 'compilation'},
-      {name: 'Audiobooks', path: '/usr/share/media/audiobooks', strategy: 'audiobook'},
-      {name: 'Soundtracks', path: '/usr/share/media/soundtrack', strategy: 'compilation'}
-   ]
-};
-
+  "roots": [
+    {"name": "Music", ",path": "path/to/music", strategy: "auto"},
+    {"name": "Compilations", "path": "path/to/compilations", "strategy": "compilation"},
+    {"name": "Soundtracks", "path": "path/to/soundtracks", "strategy": "compilation"},
+    {"name": "Audiobooks", "path": "path/to/audiobooks", "strategy": "audiobook"}
+  ]
+}
 ```
 
 ### Build

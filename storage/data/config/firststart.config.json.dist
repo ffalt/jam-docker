@@ -1,0 +1,12 @@
+{
+	"adminUser": {
+		"name": "admin",
+		"pass": "admin"
+	},
+	"roots": [
+		{"name": "Music", "path": "/usr/share/media/music", "strategy": "auto"},
+		{"name": "Compilations", "path": "/usr/share/media/compilations", "strategy": "compilation"},
+		{"name": "Soundtracks", "path": "/usr/share/media/soundtracks", "strategy": "compilation"},
+		{"name": "Audiobooks", "path": "/usr/share/media/audiobooks", "strategy": "audiobook"}
+	]
+}
