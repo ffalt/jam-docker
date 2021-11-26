@@ -1,6 +1,13 @@
 # jam-docker
 a default configuration running jam & postgres with docker
 
+## Platform Support
+
+[docker images](https://hub.docker.com/r/ffalt/jam/tags) are available as
+
+* amd64
+* arm64
+
 ## Howto
 
 ### Download
