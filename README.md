@@ -139,16 +139,13 @@ These settings are copied to the database on the first run, you can change them 
 ```
 
 ### Build
-`docker-compose build`
+`docker compose build`
 
 ### Start
-`docker-compose up -d`
-
-### Status
-`docker ps`
+`docker compose up -d`
 
 ### Stop
-`docker-compose stop`
+`docker compose stop`
 
 ### Update
-`docker-compose pull`
+`docker compose pull`
