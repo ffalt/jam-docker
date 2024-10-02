@@ -112,7 +112,7 @@ entered as `/usr/share/media/music/Awesome Collection`
 
 These settings are copied to the database on the first run, you can change them within the Admin Section of the front-end.
 
-```json lines
+```json5
 /*
   Add Admin user and media folders on first start
  */
