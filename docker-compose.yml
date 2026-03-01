@@ -47,6 +47,8 @@ services:
       JAM_DB_NAME: "${JAM_DB_NAME}"
       JAM_DB_USER: "${JAM_DB_USER}"
       JAM_DB_PASSWORD: "${JAM_DB_PASSWORD}"
+      JAM_ACOUSTID_API_KEY: "${JAM_ACOUSTID_API_KEY}"
+      JAM_LASTFM_API_KEY: "${JAM_LASTFM_API_KEY}"
       JAM_DATA_PATH: /home/node/jam/data/
       JAM_FRONTEND_PATH: /home/node/jam/berry/
       JAM_DB_DIALECT: postgres

@@ -97,6 +97,14 @@ JAM_DB_USER=jam
 # Database user password
 JAM_DB_PASSWORD=jam
 
+## Third-Party API Keys (optional)
+
+# AcoustID API key for audio fingerprinting (https://acoustid.org/)
+# JAM_ACOUSTID_API_KEY=your-acoustid-api-key
+
+# Last.fm API key for music metadata (https://www.last.fm/api)
+# JAM_LASTFM_API_KEY=your-lastfm-api-key
+
 ```
 
 
@@ -137,8 +145,8 @@ These settings are copied to the database on the first run, you can change them 
     'audiobook' -- bunch of audiobook folders
    */
   "roots": [
-    {"name": "Music", ",path": "path/to/music", strategy: "auto"},
-    {"name": "Compilations", "path": "path/to/compilations", "strategy": "compilation"},
+    {"name": "Music", "path": "/usr/share/media/music", "strategy": "auto"},
+    {"name": "Compilations", "path": "/usr/share/media/compilations", "strategy": "compilation"},
     {"name": "Soundtracks", "path": "path/to/soundtracks", "strategy": "compilation"},
     {"name": "Audiobooks", "path": "path/to/audiobooks", "strategy": "audiobook"}
   ]
