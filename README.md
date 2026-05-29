@@ -63,24 +63,29 @@ These settings are used on startup, changes require a Docker restart.
 # Server Domain URL (e.g. https://music.yourdomain.somewhere)
 JAM_DOMAIN=http://localhost:4040
 
-# Server listen address
+# Host address and port the container is exposed on (host-side binding only,
+# the container itself always listens on 0.0.0.0:4040)
 JAM_HOST=0.0.0.0
-
-# Server listen port
 JAM_PORT=4040
 
 # Log Level, possible values: 'error' | 'warn' | 'info' | 'debug'
 JAM_LOG_LEVEL=info
+
+# Minimum password length
+JAM_MIN_PASSWORD_LENGTH=10
 
 # Due to CORS security you MUST name all domains where login with session cookie is allowed
 # https://de.wikipedia.org/wiki/Cross-Origin_Resource_Sharing
 #  (background: random sites cannot access/create cookies for your domain)
 JAM_ALLOWED_COOKIE_DOMAINS=http://localhost:4040
 
-# An unique string for your instance to sign the session cookie (change it!)
-# http://www.senchalabs.org/connect/session.html
+# Unique strings to sign tokens and session cookies - change these!
 JAM_JWT_SECRET=keyboard cat is stomping
+# Max age for a valid JWT token (e.g. '1 day', '1 month', '1 year', or 0 for no expiration)
+JAM_JWT_MAXAGE=1 month
 JAM_SESSION_SECRET=keyboard cat is dancing
+# Max age for a valid session cookie (same format as JWT_MAXAGE)
+JAM_SESSION_MAXAGE=1 month
 
 # If true, session cookies are only available for https, NOT http
 JAM_SESSION_COOKIE_SECURE=false
@@ -105,6 +110,9 @@ JAM_DB_PASSWORD=jam
 # Last.fm API key for music metadata (https://www.last.fm/api)
 # JAM_LASTFM_API_KEY=your-lastfm-api-key
 
+# Enable worker threads for audio processing tasks
+# JAM_USE_TASKS=true
+
 ```
 
 
@@ -112,9 +120,9 @@ JAM_DB_PASSWORD=jam
 
 Media and User Settings only applied once on first start
 
-Jam in Docker expects all path entries to your media in `<location on your system>/jam/data/media/` to be replaced with `/usr/share/media/`
+Jam in Docker expects all path entries to your media in `<location on your system>/jam/storage/media/` to be replaced with `/usr/share/media/`
 
-e.g. `/Users/ffalt/projects/jam/docker/run/data/media/Awesome Collection`
+e.g. `/home/user/jam/storage/media/music/Awesome Collection`
 
 entered as `/usr/share/media/music/Awesome Collection`
 
@@ -162,5 +170,21 @@ These settings are copied to the database on the first run, you can change them 
 ### Stop
 `docker compose stop`
 
+### Logs
+`docker compose logs -f jam`
+
 ### Update
-`docker compose pull`
+```
+docker compose pull
+docker compose up -d
+```
+
+### Production checklist
+
+When deploying with a real domain and HTTPS, make sure to update these settings in `.env`:
+
+- `JAM_DOMAIN` - your public URL (e.g. `https://music.example.com`)
+- `JAM_ALLOWED_COOKIE_DOMAINS` - same public URL
+- `JAM_SESSION_COOKIE_SECURE=true` - required for HTTPS
+- `JAM_SESSION_TRUST_PROXY=true` - required when behind a reverse proxy (e.g. nginx)
+- `JAM_JWT_SECRET` and `JAM_SESSION_SECRET` - use long random strings, never the defaults
