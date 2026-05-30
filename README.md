@@ -107,6 +107,9 @@ JAM_DB_PASSWORD=jam
 # AcoustID API key for audio fingerprinting (https://acoustid.org/)
 # JAM_ACOUSTID_API_KEY=your-acoustid-api-key
 
+# Discogs Personal Token for music metadata (https://www.discogs.com/)
+# JAM_DISCOGS_API_TOKEN=your-discog-token
+
 # Last.fm API key for music metadata (https://www.last.fm/api)
 # JAM_LASTFM_API_KEY=your-lastfm-api-key
 
