@@ -31,7 +31,7 @@ services:
     user: node
     ports:
       - "${JAM_HOST}:${JAM_PORT}:4040"
-    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; sh /home/node/start.sh'
+    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; exec sh /home/node/start.sh'
     environment:
       JAM_HOST: "0.0.0.0"
       JAM_PORT: "4040"
