@@ -79,11 +79,13 @@ JAM_MIN_PASSWORD_LENGTH=10
 #  (background: random sites cannot access/create cookies for your domain)
 JAM_ALLOWED_COOKIE_DOMAINS=http://localhost:4040
 
-# Unique strings to sign tokens and session cookies - change these!
-JAM_JWT_SECRET=keyboard cat is stomping
+# REQUIRED - unique random strings to sign tokens and session cookies.
+# Jam refuses to start unless each is at least 64 characters. Generate one for each with:
+#   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+JAM_JWT_SECRET=
 # Max age for a valid JWT token (e.g. '1 day', '1 month', '1 year', or 0 for no expiration)
 JAM_JWT_MAXAGE=1 month
-JAM_SESSION_SECRET=keyboard cat is dancing
+JAM_SESSION_SECRET=
 # Max age for a valid session cookie (same format as JWT_MAXAGE)
 JAM_SESSION_MAXAGE=1 month
 
@@ -190,4 +192,5 @@ When deploying with a real domain and HTTPS, make sure to update these settings 
 - `JAM_ALLOWED_COOKIE_DOMAINS` - same public URL
 - `JAM_SESSION_COOKIE_SECURE=true` - required for HTTPS
 - `JAM_SESSION_TRUST_PROXY=true` - required when behind a reverse proxy (e.g. nginx)
-- `JAM_JWT_SECRET` and `JAM_SESSION_SECRET` - use long random strings, never the defaults
+- `JAM_JWT_SECRET` and `JAM_SESSION_SECRET` - required in every deployment, not just in
+  production; `.env.dist` ships them empty and Jam will not start until you generate them
